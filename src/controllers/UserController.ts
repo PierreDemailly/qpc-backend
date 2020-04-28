@@ -31,6 +31,26 @@ class UserController {
       res.status(400).json({ error: 'username already in use' });
     }
   }
+
+  static getCurrentUser = async (req: Request, res: Response) => {
+    const id = res.locals.jwtPayload;
+    if (!id) {
+      res.status(401).json({ error: id });
+      return;
+    }
+;
+    const userRepo = getRepository(User);
+    let user: User;
+
+    try {
+      user = await userRepo.findOneOrFail(id);
+    } catch (e) {
+      res.status(401).json({ error: 'invalid jwt' });
+      return;
+    }
+
+    res.status(200).json(user);
+  }
 }
 
 export default UserController;

@@ -17,12 +17,11 @@ export const updateToken = async (
     // try to validate the token and get data
     try {
       jwtPayload = <any>jwt.verify(token, config.jwtSecret);
-      // set it in locals for next middlewares
-      res.locals.jwtPayload = jwtPayload;
     } catch (e) {
       return;
     }
-
+    
+    res.locals.jwtPayload = jwtPayload;
     const { id } = jwtPayload;
     // const userRepo = getRepository(User);
     // let user: User;

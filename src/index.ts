@@ -25,7 +25,7 @@ createConnection().then(async () => {
     app.use('/avatars', express.static(path.join('avatars')));
     // set all routes from routes folder
     // try to update jwt for each request
-    app.use('/api', routes);
+    app.use('/api', [updateToken, routes]);
 
     app.listen(3000, () => {
       console.log('Server started on port 3000!');
